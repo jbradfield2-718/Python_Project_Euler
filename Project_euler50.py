@@ -10,10 +10,14 @@ The longest sum of consecutive primes below one-thousand that adds to a prime, c
 
 Which prime, below one-million, can be written as the sum of the most consecutive primes? '''
 
+# This program uses brute force solution, and loads a csv of all primes < 1e6.
+# Answer in approx 16s.  Not best solution.
+
 import Functions
 import time
 global primes_ls
-primes_ls = Functions.primes_sieve(999999)
+primes_ls = Functions.import_csv('primes_1e6.csv')
+primes_ls = list(map(int, primes_ls))                       # Need to add list on outside, Python 3
 
 def sum_of_primes(num_terms, start):
 	global primes_ls
@@ -24,22 +28,37 @@ def sum_of_primes(num_terms, start):
 	
 	return ans
 
-start = time.clock()
-best = 21
+start_time = time.clock()
+
 prime_sum = 0
-limit = 100
+start_index = primes_ls.index(953)
+best = 953
+best_ls = []
+test_sum = 0
+ls_of_primes = []
 
-for i in range(len(primes_ls)):
-	print(primes_ls[i])
-	prime_sum = sum_of_primes(best,i)
-	if prime_sum in primes_ls:
-		current = best -1
-		while current <= limit:
-			prime_sum += primes_ls[current]
-			current += 1
-			if current +1 > best:
-				best = current +1
-				print('current best...',prime_sum)
 
-print('The prime < 1e6 sum of most consecutive primes is ',primes_ls[best -1])
-Functions.runtime(start)
+for i in range(start_index, len(primes_ls)):
+	index = 3                                       # Incremented start prime unit correct answer.  Must be low prime.
+	ls_of_primes = []
+	current_prime = primes_ls[i]
+
+	while test_sum < current_prime:
+		test_sum += primes_ls[index]
+		ls_of_primes.append(primes_ls[index])
+		if test_sum == current_prime:
+			break
+		index += 1
+
+	if test_sum == current_prime:
+		best = current_prime
+		best_ls = ls_of_primes
+		test_sum = 0
+		continue
+
+	test_sum = 0
+
+print('The number is, ', best)
+print(best_ls)
+print(len(best_ls))
+Functions.runtime(start_time)
