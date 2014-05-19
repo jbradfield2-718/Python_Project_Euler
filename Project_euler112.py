@@ -67,9 +67,9 @@ def bouncy_test(str):
 		#a = input()
 	return False
 
-num = 21781
-bouncy = 10890
-percent = .9
+num = 100
+bouncy = 0
+percent = .99
 
 while True:
 	if bouncy_test(str(num)) == True:

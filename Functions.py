@@ -4,6 +4,7 @@
 import time
 import csv
 import sys
+import winsound
 
 def decompose_digit(num):
 	ls = []
@@ -11,21 +12,21 @@ def decompose_digit(num):
 	temp = num
 	magnitude = 10
 	while( remain > 0 ):
-	    temp = remain % magnitude
-	    ls.append( round(temp / (magnitude/10) ) )		# We round to the nearest int to prevent floats near the exact
-	    remain -= temp
-	    magnitude *= 10 					# Increases by an order of magnitude
+		temp = remain % magnitude
+		ls.append( round(temp / (magnitude/10) ) )		# We round to the nearest int to prevent floats near the exact
+		remain -= temp
+		magnitude *= 10 					# Increases by an order of magnitude
 		
 	return ls[::-1]                                         # Reverses the list
 	
 def str_to_int(str):
-    num = 0
-    for i in range(0, len(str)):
-        if i != (len(str) -1):
-            num +=  (ord(str[i]) - 48)*(10**(len(str) - i -1))
-        else:
-            num += ((ord(str[i]) - 48))
-    return num
+	num = 0
+	for i in range(0, len(str)):
+		if i != (len(str) -1):
+			num +=  (ord(str[i]) - 48)*(10**(len(str) - i -1))
+		else:
+			num += ((ord(str[i]) - 48))
+	return num
 
 def import_csv(file):
 	ls = []
@@ -33,7 +34,7 @@ def import_csv(file):
 		reader = csv.reader(f)
 		for row in reader:
 			ls.append(row)
-	return ls[0]
+	return ls							# Change to ls[0] if you only want the first row.
 
 def write_csv(file, ls):
 
@@ -70,15 +71,16 @@ def int_to_str(integer, magnitude=10):
 def runtime(start):
 	runtime=time.clock()-start
 	print("The total program runtime was ",runtime," seconds.")
+	winsound.Beep(300,2000)
 	
 #=====================================================================================================
 # Builds a list of ASCII characters when passed a string
 #=====================================================================================================
 def decompose_string(string):
-  ls=[]
-  for i in range(0, len(string)):
-    ls.append(string[i])
-  return ls
+	ls=[]
+	for i in range(0, len(string)):
+		ls.append(string[i])
+		return ls
 #====================================================================================================
 # Sieve of Eratosthenes algorithm to return prime numbers up to numerical limit
 #==================================================================================================== 
