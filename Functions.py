@@ -6,6 +6,30 @@ import csv
 import sys
 import winsound
 
+def is_pandigital(ls):
+    if len(ls) != 9:
+        return False
+    if '1' in ls and '2' in ls and '3' in ls and '4' in ls and '5' in ls and '6' in ls and '7' in ls and '8' in ls and '9' in ls:
+        return True
+    return False
+
+def fibonacci(counter, n_minus1 = 0, n_minus2 = 0):
+	if n_minus1 > 0 and n_minus2 > 0:
+		return n_minus1 + n_minus2
+
+	else:
+		n_1 = 1
+		n_2 = 1
+		num_iter = 2
+		x = 0
+    
+		while(num_iter < counter):
+			x = n_1 + n_2
+			n_1 = n_2
+			n_2 = x
+			num_iter += 1
+		return x
+
 def decompose_digit(num):
 	ls = []
 	remain = num
